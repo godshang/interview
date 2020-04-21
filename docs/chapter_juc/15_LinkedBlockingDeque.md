@@ -1,0 +1,4 @@
+# LinkedBlockingDeque
+
+LinkedBlockingDeque与LinkedBlockingQueue类似，只是使用双端队列实现。不同之处在于，LinkedBlockingDeque使用了一个独占锁，因此实现起来也比较简单，所有对队列的操作都加锁就可以完成，同时独占锁也能够很好的支持双向阻塞的特性。缺点就是由于独占锁，所以不能同时进行两个操作，这样性能上就大打折扣。从性能的角度讲LinkedBlockingDeque要比LinkedBlockingQueue要低很多，比ConcurrentLinkedQueue就低更多了，这在高并发情况下就比较明显了。
+
