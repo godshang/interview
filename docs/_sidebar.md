@@ -50,6 +50,8 @@
   * 系统设计
     * [限流](chapter_system_design/01_Rate_Limiter.md)
     * [缓存一致性](chapter_system_design/02_Cache_Consistency.md)
+    * [缓存雪崩、缓存穿透](chapter_system_design/02_Cache_Consistency.md)
+    * [如何设计一个亿级网关](chapter_system_design/04_Gateway.md)
   * 其他
     * [IO模型](chapter_xx/IO.md)
     * [Reactor模式](chapter_xx/Reactor.md)
