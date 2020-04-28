@@ -43,6 +43,8 @@
     * [Scan](chapter_redis/05_Redis_Scan.md)
     * [Redis持久化](chapter_redis/06_Redis_Persistence.md)
     * [Redis事务](chapter_redis/07_Redis_Tx.md)
+  * 消息队列
+    * [为什么使用消息队列？消息队列有什么优点和缺点？Kafka、ActiveMQ、RabbitMQ、RocketMQ 都有什么优点和缺点？](chapter_mq/01_Why_MQ.md)
 
 * Part III 理论
   * 分布式系统
