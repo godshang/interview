@@ -44,7 +44,8 @@
     * [Redis持久化](chapter_redis/06_Redis_Persistence.md)
     * [Redis事务](chapter_redis/07_Redis_Tx.md)
   * 消息队列
-    * [为什么使用消息队列？消息队列有什么优点和缺点？Kafka、ActiveMQ、RabbitMQ、RocketMQ 都有什么优点和缺点？](chapter_mq/01_Why_MQ.md)
+    * [Kafka深度解析](chapter_mq/01_Kafka.md)
+    * [为什么使用消息队列？消息队列有什么优点和缺点？Kafka、ActiveMQ、RabbitMQ、RocketMQ 都有什么优点和缺点？](chapter_mq/xx_Why_MQ.md)
 
 * Part III 理论
   * 分布式系统
@@ -57,3 +58,12 @@
   * 其他
     * [IO模型](chapter_xx/IO.md)
     * [Reactor模式](chapter_xx/Reactor.md)
+
+* Part IV 算法
+  * LeetCode
+    * [2. 两数相加](chapter_leetcode/Q2_Add_Two_Numbers.md)
+    * [19. 删除链表的倒数第N个节点](chapter_leetcode/Q19_Remove_Nth_Node_From_End_of_List.md)
+    * [21. 合并两个有序链表](chapter_leetcode/Q21_Merge_Two_Sorted_Lists.md)
+    * [23. 合并K个排序链表](chapter_leetcode/Q23_Merge_k_Sorted_Lists.md)
+    * [24. 两两交换链表中的节点](chapter_leetcode/Q24_Swap_Nodes_in_Pairs.md)
+    * [25. K 个一组翻转链表](chapter_leetcode/Q25_Reverse_Nodes_in_k_Group.md)
