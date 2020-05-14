@@ -67,3 +67,6 @@
     * [23. 合并K个排序链表](chapter_leetcode/Q23_Merge_k_Sorted_Lists.md)
     * [24. 两两交换链表中的节点](chapter_leetcode/Q24_Swap_Nodes_in_Pairs.md)
     * [25. K 个一组翻转链表](chapter_leetcode/Q25_Reverse_Nodes_in_k_Group.md)
+    * [61. 旋转链表](chapter_leetcode/Q61_Rotate_List.md)
+    * [82. 删除排序链表中的重复元素 II](chapter_leetcode/Q82_Remove_Duplicates_From_Sorted_List_II.md)
+    * [83. 删除排序链表中的重复元素](chapter_leetcode/Q83_Remove_Duplicates_from_Sorted_List.md)
