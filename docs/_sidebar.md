@@ -70,3 +70,4 @@
     * [61. 旋转链表](chapter_leetcode/Q61_Rotate_List.md)
     * [82. 删除排序链表中的重复元素 II](chapter_leetcode/Q82_Remove_Duplicates_From_Sorted_List_II.md)
     * [83. 删除排序链表中的重复元素](chapter_leetcode/Q83_Remove_Duplicates_from_Sorted_List.md)
+    * [86. 分隔链表](chapter_leetcode/Q86_Partition_List.md)
