@@ -32,9 +32,10 @@
   * JVM
     * [Java内存区域](chapter_jvm/01_Memory.md)
     * [垃圾收集策略与算法](chapter_jvm/02_GC.md)
-    * [HotSpot 垃圾收集器](chapter_jvm/03_HotSpot_GC.md)
-    * [内存分配与回收策略](chapter_jvm/04_Memory_Allocation.md)
-    * [类加载器](chapter_jvm/05_Class_Loader.md)
+    * [HotSpot的算法细节实现](chapter_jvm/03_HotSpot_Algo.md)
+    * [HotSpot 垃圾收集器](chapter_jvm/04_HotSpot_GC.md)
+    * [内存分配与回收策略](chapter_jvm/05_Memory_Allocation.md)
+    * [类加载器](chapter_jvm/06_Class_Loader.md)
 
 * Part II 中间件
   * Spring
