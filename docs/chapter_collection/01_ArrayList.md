@@ -2,7 +2,7 @@
 
 `ArrayList`是一个最常用的列表数据结构，底层基于数组实现。功能上与Java中的数组类似，但是一个动态的数据，它的容量可以随着元素的加入动态增长，而不需要使用者关心。`ArrayList`继承于`AbstractList`，实现了`List`、`RandomAccess`、`Cloneable`、`Serializable`接口。
 
-<img src="image/chapter_collection/ArrayList.png" />
+<img src="chapter_collection/image/ArrayList.png" />
 
 ## 构造函数
 

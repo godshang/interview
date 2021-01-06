@@ -2,7 +2,7 @@
 
 `LinkedList`是另一个`List`接口的实现，底层基于链表实现。`LinkedList`继承于`AbstractSequentialList`，实现了`List`、`Deque`、`Cloneable`、`Serializable`接口。
 
-<img src="image/chapter_collection/LinkedList.png" />
+<img src="chapter_collection/image/LinkedList.png" />
 
 ## Entry内部类
 

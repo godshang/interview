@@ -85,7 +85,7 @@ parition是物理上的概念，每个topic包含一个或多个partition，创�
 
 ### Kafka架构
 
-<img src="image/chapter_mq/36d9a81335c91bf7002b4b787d8123c8.png" />
+<img src="chapter_mq/image/36d9a81335c91bf7002b4b787d8123c8.png" />
 
 如上图所示，一个典型的kafka集群中包含若干producer（可以是web前端产生的page view，或者是服务器日志，系统CPU、memory等），若干broker（Kafka支持水平扩展，一般broker数量越多，集群吞吐率越高），若干consumer group，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在consumer group发生变化时进行rebalance。producer使用push模式将消息发布到broker，consumer使用pull模式从broker订阅并消费消息。
 
@@ -99,7 +99,7 @@ push模式很难适应消费速率不同的消费者，因为消息发送速率�
 
 Topic在逻辑上可以被认为是一个queue。每条消费都必须指定它的topic，可以简单理解为必须指明把这条消息放进哪个queue里。为了使得Kafka的吞吐率可以水平扩展，物理上把topic分成一个或多个partition，每个partition在物理上对应一个文件夹，该文件夹下存储这个partition的所有消息和索引文件。
 
-<img src="image/chapter_mq/576764f4757bd743028457325a080325.png" />
+<img src="chapter_mq/image/576764f4757bd743028457325a080325.png" />
 
 每个日志文件都是一个log entry序列，每个log entry包含一个4字节整型数值（值为N+5），1个字节的”magic value”，4个字节的CRC校验码，其后跟N个字节的消息体。每条消息都有一个当前Partition下唯一的64字节的offset，它指明了这条消息的起始位置。磁盘上存储的消息格式如下：
 
@@ -110,11 +110,11 @@ Topic在逻辑上可以被认为是一个queue。每条消费都必须指定它�
 
 这个log entry并非由一个文件构成，而是分成多个segment，每个segment以该segment第一条消息的offset命名并以“.kafka”为后缀。另外会有一个索引文件，它标明了每个segment下包含的log entry的offset范围，如下图所示。
 
-<img src="image/chapter_mq/0cfc501edc5e3f7c452e4053478e5596.png" />
+<img src="chapter_mq/image/0cfc501edc5e3f7c452e4053478e5596.png" />
 
 因为每条消息都被append到该Partition中，属于顺序写磁盘，因此效率非常高（经验证，顺序写磁盘效率比随机写内存还要高，这是Kafka高吞吐率的一个很重要的保证）。
 
-<img src="image/chapter_mq/4dc26ac13fe327d765fbb6e83ed29571.png" />
+<img src="chapter_mq/image/4dc26ac13fe327d765fbb6e83ed29571.png" />
 
 每一条消息被发送到broker时，会根据paritition规则选择被存储到哪一个partition。如果partition规则设置的合理，所有消息可以均匀分布到不同的partition里，这样就实现了水平扩展。（如果一个topic对应一个文件，那这个文件所在的机器I/O将会成为这个topic的性能瓶颈，而partition解决了这个问题）。在创建topic时可以在`$KAFKA_HOME/config/server.properties`中指定这个partition的数量(如下所示)，当然也可以在topic创建之后去修改parition数量。
 
@@ -164,7 +164,7 @@ public void sendMessage() throws InterruptedException{
 
 则key相同的消息会被发送并存储到同一个partition里，而且key的序号正好和partition序号相同。（partition序号从0开始，本例中的key也正好从0开始）。如下图所示。
 
-<img src="image/chapter_mq/ccecc519a0e614dd889585753c5b6f8f.png" />
+<img src="chapter_mq/image/ccecc519a0e614dd889585753c5b6f8f.png" />
 
 对于传统的message queue而言，一般会删除已经被消费的消息，而Kafka集群会保留所有的消息，无论其被消费与否。当然，因为磁盘限制，不可能永久保留所有数据（实际上也没必要），因此Kafka提供两种策略去删除旧数据。一是基于时间，二是基于partition文件大小。例如可以通过配置`$KAFKA_HOME/config/server.properties`，让Kafka删除一周前的数据，也可通过配置让Kafka在partition文件超过1GB时删除旧数据，如下所示。
 
@@ -248,11 +248,11 @@ Kafka在Zookeeper中动态维护了一个ISR（in-sync replicas） set，这个s
 
 上文说明了一个parition的replication过程，然尔Kafka集群需要管理成百上千个partition，Kafka通过round-robin的方式来平衡partition从而避免大量partition集中在了少数几个节点上。同时Kafka也需要平衡leader的分布，尽可能的让所有partition的leader均匀分布在不同broker上。另一方面，优化leadership election的过程也是很重要的，毕竟这段时间相应的partition处于不可用状态。一种简单的实现是暂停宕机的broker上的所有partition，并为之选举leader。实际上，Kafka选举一个broker作为controller，这个controller通过watch Zookeeper检测所有的broker failure，并负责为所有受影响的parition选举leader，再将相应的leader调整命令发送至受影响的broker，过程如下图所示。
 
-<img src="image/chapter_mq/3d19370d42bb31686f28876732118286.png" />
+<img src="chapter_mq/image/3d19370d42bb31686f28876732118286.png" />
 
 这样做的好处是，可以批量的通知leadership的变化，从而使得选举过程成本更低，尤其对大量的partition而言。如果controller失败了，幸存的所有broker都会尝试在Zookeeper中创建/controller->{this broker id}，如果创建成功（只可能有一个创建成功），则该broker会成为controller，若创建不成功，则该broker会等待新controller的命令。
 
-<img src="image/chapter_mq/e592fa653b0e9b40279b2471bae1808b.png" />
+<img src="chapter_mq/image/e592fa653b0e9b40279b2471bae1808b.png" />
 
 #### Consumer group
 
@@ -260,15 +260,15 @@ Kafka在Zookeeper中动态维护了一个ISR（in-sync replicas） set，这个s
 
 每一个consumer实例都属于一个consumer group，每一条消息只会被同一个consumer group里的一个consumer实例消费。（不同consumer group可以同时消费同一条消息）
 
-<img src="image/chapter_mq/f5274f411f528c526cb7fcf4a501fade.png" />
+<img src="chapter_mq/image/f5274f411f528c526cb7fcf4a501fade.png" />
 
 很多传统的message queue都会在消息被消费完后将消息删除，一方面避免重复消费，另一方面可以保证queue的长度比较少，提高效率。而如上文所将，Kafka并不删除已消费的消息，为了实现传统message queue消息只被消费一次的语义，Kafka保证保证同一个consumer group里只有一个consumer会消费一条消息。与传统message queue不同的是，Kafka还允许不同consumer group同时消费同一条消息，这一特性可以为消息的多元化处理提供了支持。实际上，Kafka的设计理念之一就是同时提供离线处理和实时处理。根据这一特性，可以使用Storm这种实时流处理系统对消息进行实时在线处理，同时使用Hadoop这种批处理系统进行离线处理，还可以同时将数据实时备份到另一个数据中心，只需要保证这三个操作所使用的consumer在不同的consumer group即可。下图展示了Kafka在Linkedin的一种简化部署。
 
-<img src="image/chapter_mq/45169cf4c2f822cf35b8391a2dbf9ad9.png" />
+<img src="chapter_mq/image/45169cf4c2f822cf35b8391a2dbf9ad9.png" />
 
 为了更清晰展示Kafka consumer group的特性，笔者作了一项测试。创建一个topic (名为topic1)，创建一个属于group1的consumer实例，并创建三个属于group2的consumer实例，然后通过producer向topic1发送key分别为1，2，3r的消息。结果发现属于group1的consumer收到了所有的这三条消息，同时group2中的3个consumer分别收到了key为1，2，3的消息。如下图所示。
 
-<img src="image/chapter_mq/3971ea5c5361b15712262ad2e336468b.png" />
+<img src="chapter_mq/image/3971ea5c5361b15712262ad2e336468b.png" />
 
 #### Consumer Rebalance
 

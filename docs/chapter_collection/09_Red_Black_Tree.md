@@ -51,7 +51,7 @@ AVL树是严格的平衡树，因此在增加或者删除节点的时候，根�
 
 下图是一个典型的红黑树结构。
 
-<img src="image/chapter_collection/450px-Red-black_tree_example.svg.png" />
+<img src="chapter_collection/image/450px-Red-black_tree_example.svg.png" />
 
 因为红黑树是一种特殊的二叉查找树，因此红黑树上的只读操作与普通的二叉查找树的只读操作相同。然而，在红黑树上进行插入操作和删除操作会导致不再符合红黑树的性质。恢复红黑树的性质需要少量（O(log n)）的颜色变更（实际是非常快速的）和不超过三次的树旋转（对于插入操作是两次）。虽然插入和删除很复杂，但操作时间仍可以保持为O(log n)次。
 
@@ -59,7 +59,7 @@ AVL树是严格的平衡树，因此在增加或者删除节点的时候，根�
 
 插入节点或删除节点都可能会造成红黑树的不平衡，必须进行调整，使之重新符合红黑树的规则。调整方法有两种，变色和旋转，旋转又分为左旋转和右旋转。
 
-<img src="image/chapter_collection/45e6629fc939b2140fa30b885a0db6bf.png" />
+<img src="chapter_collection/image/45e6629fc939b2140fa30b885a0db6bf.png" />
 
 参照`TreeMap`中的左旋和右旋代码：
 
@@ -105,7 +105,7 @@ private void rotateRight(Entry<K,V> p) {
 
 我们将要插入的节点记为N，N的父节点记为P，N的祖父节点记为G，N的叔父节点（父节点的兄弟节点）记为U。
 
-<img src="image/chapter_collection/Red-black_tree_insert.png" />
+<img src="chapter_collection/image/Red-black_tree_insert.png" />
 
 **情形1**
 
@@ -119,7 +119,7 @@ private void rotateRight(Entry<K,V> p) {
 
 **情形3**
 
-<img src="image/chapter_collection/Red-black_tree_insert_case_3.png" />
+<img src="chapter_collection/image/Red-black_tree_insert_case_3.png" />
 
 如果父节点P和叔父节点U都是红色，如上图所示。此时新插入节点N作为P的左子节点或右子节点都属于情形3，这里的图仅显示N作为P左子的情形。我们可以将他们两个重绘为黑色并重绘祖父节点G为红色（用来保证性质5）。现在的新节点N有了一个黑色的父节点P。因为通过父节点P或叔父节点U的任何路径都必定通过祖父节点G，在这些路径上的黑节点数目没有改编，但是，红色的祖父节点G可能是根节点，这就违背了性质2，也有可能祖父节点G的父节点是红色的，这就违反了性质4。为了解决这个问题，我们在祖父节点G上递归地进行**情形1**的整个过程（把G当成是新插入的节点进行各种情形的检查）。
 
@@ -127,13 +127,13 @@ private void rotateRight(Entry<K,V> p) {
 
 **情形4**
 
-<img src="image/chapter_collection/Red-black_tree_insert_case_4.png" />
+<img src="chapter_collection/image/Red-black_tree_insert_case_4.png" />
 
 父节点P是红色而叔父节点U是黑色或缺少，并且新节点N是其父节点P的右子节点而父节点P又是其父节点的左子节点。在这种情形下，我们进行一次左旋转调换新节点和其父节点的角色；接着，我们按情形5处理以前的父节点P以解决仍然失效的性质4.注意这个改编会导致某些路径通过他们以前不通过的新节点N（比如途中1号叶子节点）或不通过节点P（比如途中3号叶子节点），但由于这两个节点都是红色的，所以性质5仍然有效。
 
 **情形5**
 
-<img src="image/chapter_collection/Red-black_tree_insert_case_5.png" />
+<img src="chapter_collection/image/Red-black_tree_insert_case_5.png" />
 
 父节点P是红色而叔父节点U是黑色或缺少，新节点N是其父节点的左子节点，而父节点P又是其父节点G的左子节点。在这种情形下，我们进行针对祖父节点G的一次右旋转；在旋转产生的树中，以前的父节点现在是新节点N和以前的祖父节点G的父节点。我们知道以前的祖父节点G是黑色，否则父节点P就不可能是红色（如果P和G都是红色就违反了性质4，所以G必须是黑色）。我们切换以前的父节点P和祖父节点G的颜色，结果的树满足性质4。性质5也仍然满足，因为通过这三个节点中任何一个的所有路径以前都通过祖父节点G，现在他们都通过以前的父节点P。在各自的情形下，这都是三个节点中唯一的黑色节点。
 
@@ -145,7 +145,7 @@ private void rotateRight(Entry<K,V> p) {
 
 需要进一步讨论的是在要删除的节点和它的儿子二者都是黑色的时候，这是一种复杂的情况（这种情况下该节点的两个儿子都是叶子节点，否则若其中一个儿子是黑色非叶子节点，另一个儿子是叶子节点，那么从该节点通过非叶子节点儿子的路径上的黑色节点数最小为2，而从该节点到另一个叶子节点儿子的路径上的黑色节点数为1，违反了性质5）。我们首先把要删除的节点替换为它的儿子。出于方便，称呼这个儿子为N（在新的位置上），称呼它的兄弟（它父亲的另一个儿子）为S，使用P称呼N的父亲，SL称呼S的左儿子，SR称呼S的右儿子。
 
-<img src="image/chapter_collection/Red-black_tree_delete.png" />
+<img src="chapter_collection/image/Red-black_tree_delete.png" />
 
 如果N和它初始的父亲是黑色，则删除它的父亲导致通过N的路径都比不通过它的路径少了一个黑色节点。因为这违反了性质5，树需要被重新平衡。有几种情形需要考虑：
 
@@ -153,19 +153,19 @@ private void rotateRight(Entry<K,V> p) {
 
 **情形2**： S是红色。在这种情形下我们在N的父亲上做左旋转，把红色兄弟转换成N的祖父，我们接着对调N的父亲和祖父的颜色。完成这两个操作后，尽管所有路径上黑色节点的数目没有改变，但现在N有了一个黑色的兄弟和一个红色的父亲（它的新兄弟是黑色因为它是红色S的一个儿子），所以我们可以接下去按情形4、情形5或情形6来处理。
 
-<img src="image/chapter_collection/Red-black_tree_delete_case_2.png" />
+<img src="chapter_collection/image/Red-black_tree_delete_case_2.png" />
 
 **情形3**： N的父亲、S和S的儿子都是黑色的。在这种情形下，我们简单的重绘S为红色。结果是通过S的所有路径，它们就是以前不通过N的那些路径，都少了一个黑色节点。因为删除N的初始的父亲使通过N的所有路径少了一个黑色节点，这使事情都平衡了起来。但是，通过P的所有路径现在比不通过P的路径少了一个黑色节点，所以仍然违反性质5。要修正这个问题，我们要从情形1开始，在P上做重新平衡处理。
 
-<img src="image/chapter_collection/Red-black_tree_delete_case_3.png" />
+<img src="chapter_collection/image/Red-black_tree_delete_case_3.png" />
 
 **情形4**： S和S的儿子都是黑色，但是N的父亲是红色。在这种情形下，我们简单的交换N的兄弟和父亲的颜色。这不影响不通过N的路径的黑色节点的数目，但是它在通过N的路径上对黑色节点数目增加了一，添补了在这些路径上删除的黑色节点。
 
-<img src="image/chapter_collection/Red-black_tree_delete_case_4.png" />
+<img src="chapter_collection/image/Red-black_tree_delete_case_4.png" />
 
 **情形5**： S是黑色，S的左儿子是红色，S的右儿子是黑色，而N是它父亲的左儿子。在这种情形下我们在S上做右旋转，这样S的左儿子成为S的父亲和N的新兄弟。我们接着交换S和它的新父亲的颜色。所有路径仍有同样数目的黑色节点，但是现在N有了一个黑色兄弟，他的右儿子是红色的，所以我们进入了情形6。N和它的父亲都不受这个变换的影响。
 
-<img src="image/chapter_collection/Red-black_tree_delete_case_5.png" />
+<img src="chapter_collection/image/Red-black_tree_delete_case_5.png" />
 
 **情形6**： S是黑色，S的右儿子是红色，而N是它父亲的左儿子。在这种情形下我们在N的父亲上做左旋转，这样S成为N的父亲（P）和S的右儿子的父亲。我们接着交换N的父亲和S的颜色，并使S的右儿子为黑色。子树在它的根上的仍是同样的颜色，所以性质3没有被违反。但是，N现在增加了一个黑色祖先：要么N的父亲变成黑色，要么它是黑色而S被增加为一个黑色祖父。所以，通过N的路径都增加了一个黑色节点。
 
@@ -176,7 +176,7 @@ private void rotateRight(Entry<K,V> p) {
 
 在任何情况下，在这些路径上的黑色节点数目都没有改变。所以我们恢复了性质4。在示意图中的白色节点可以是红色或黑色，但是在变换前后都必须指定相同的颜色。
 
-<img src="image/chapter_collection/Red-black_tree_delete_case_6.png" />
+<img src="chapter_collection/image/Red-black_tree_delete_case_6.png" />
 
 ### TreeMap中的实现
 

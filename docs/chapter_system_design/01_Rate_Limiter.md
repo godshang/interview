@@ -35,7 +35,7 @@ def is_action_allowed(user_id, action_key, period, max_count):
 
 漏桶(Leaky Bucket)算法思路很简单，水(请求)先进入到漏桶里，漏桶以一定的速度出水(接口有响应速率)，当水流入速度过大会直接溢出(访问频率超过接口响应速率)，然后就拒绝请求，可以看出漏桶算法能强行限制数据的传输速率。
 
-<img src="image/chapter_system_design/5b0765177a1222540da1865edac47972.jpg" />
+<img src="chapter_system_design/image/5b0765177a1222540da1865edac47972.jpg" />
 
 ```python
 # coding: utf8 
@@ -92,7 +92,7 @@ Redis 4.0提供了一个限流Redis模块，名称为redis-cell，该模块提�
 
 该模块只有一条指令cl.throttle，其参数和返回值比较复杂。
 
-<img src="image/chapter_system_design/b479239a9ed81b105c86bbadfc6450fe.png" />
+<img src="chapter_system_design/image/b479239a9ed81b105c86bbadfc6450fe.png" />
 
 上面这个指令的意思是允许「用户老钱回复行为」的频率为每 60s 最多 30 次(漏水速率)，漏斗的初始容量为 15，也就是说一开始可以连续回复 15 个帖子，然后才开始受漏水速率的影响。我们看到这个指令中漏水速率变成了 2 个参数，替代了之前的单个浮点数。用两个参数相除的结果来表达漏水速率相对单个浮点数要更加直观一些。
 
@@ -111,7 +111,7 @@ Redis 4.0提供了一个限流Redis模块，名称为redis-cell，该模块提�
 
 令牌桶算法的原理是系统会以一个恒定的速度往桶里放入令牌，而如果请求需要被处理，则需要先从桶里获取一个令牌，当桶里没有令牌可取时，则拒绝服务。从原理上看，令牌桶算法和漏桶算法是相反的，一个“进水”，一个是“漏水”。
 
-<img src="image/chapter_system_design/6da79f6db4c3dc6fad11fa4f10ffbbe9.png" />
+<img src="chapter_system_design/image/6da79f6db4c3dc6fad11fa4f10ffbbe9.png" />
 
 Google的Guava包中的RateLimiter类就是令牌桶算法的解决方案。
 

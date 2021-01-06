@@ -482,7 +482,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
 
 HashMap在1.8中的put方法相对复杂了很多，大致流程如下：
 
-<img src="image/chapter_collection/59ee5965179a568be6e2c25d9481757a.png" />
+<img src="chapter_collection/image/59ee5965179a568be6e2c25d9481757a.png" />
 
 1. 判断键值对数组table[i]是否为空或为null，否则执行resize()进行扩容；
 2. 根据键值key计算hash值得到插入的数组索引i，如果table[i]==null，直接新建节点添加，转向⑥，如果table[i]不为空，转向3；
@@ -552,15 +552,15 @@ HashMap 的实现在 JDK 1.7 和 JDK 1.8 差别较大，具体区别如下：
 
 1. 数据结构
 
-<img src="image/chapter_collection/16217d714525211d.png" />
+<img src="chapter_collection/image/16217d714525211d.png" />
 
 2. 获取数据时
 
-<img src="image/chapter_collection/16217d7167830234.png" />
+<img src="chapter_collection/image/16217d7167830234.png" />
 
 3. 扩容机制
 
-<img src="image/chapter_collection/16217d71685c05a4.png" />
+<img src="chapter_collection/image/16217d71685c05a4.png" />
 
 # Reference
 

@@ -20,7 +20,7 @@ Java中有两种加锁的方式：一种是用synchronized关键字，另一种�
 
 所以如果你只是想要简单的加个锁，对性能也没什么特别的要求，用synchronized关键字就足够了。自Java 5之后，才在java.util.concurrent.locks包下有了另外一种方式来实现锁，那就是Lock。也就是说，synchronized是Java语言内置的关键字，而Lock是一个接口，这个接口的实现类在代码层面实现了锁的功能，具体细节不在本文展开，有兴趣可以研究下AbstractQueuedSynchronizer类，写得可以说是牛逼爆了。
 
-<img src="image/chapter_juc/v2-ddb71ab0b68d65ae70244bfdeb0d6704_r.jpg" />
+<img src="chapter_juc/image/v2-ddb71ab0b68d65ae70244bfdeb0d6704_r.jpg" />
 
 其实只需要关注三个类就可以了：ReentrantLock类、ReadLock类、WriteLock类。
 ReentrantLock、ReadLock、WriteLock 是Lock接口最重要的三个实现类。对应了“可重入锁”、“读锁”和“写锁”，后面会讲它们的用途。
@@ -79,7 +79,7 @@ while (flag) {
 
 这是一个简单直观的乐观锁实现，它允许多个线程同时读取（因为根本没有加锁操作），但是只有一个线程可以成功更新数据，并导致其他要更新数据的线程回滚重试。 CAS利用CPU指令，从硬件层面保证了操作的原子性，以达到类似于锁的效果。
 
-<img src="image/chapter_juc/v2-3c683e1f88faa31152fc35d14b8fb8de_r.jpg" />
+<img src="chapter_juc/image/v2-3c683e1f88faa31152fc35d14b8fb8de_r.jpg" />
 
 因为整个过程中并没有“加锁”和“解锁”操作，因此乐观锁策略也被称为无锁编程。换句话说，乐观锁其实不是“锁”，它仅仅是一个循环重试CAS的算法而已！
 
@@ -121,7 +121,7 @@ while (flag) {
 
 Java里只要以Reentrant开头命名的锁都是可重入锁，而且JDK提供的所有现成的Lock实现类，包括synchronized关键字锁都是可重入的。如果你需要不可重入锁，只能自己去实现了。网上不可重入锁的实现真的很多，就不在这里贴代码了。99%的业务场景用可重入锁就可以了，剩下的1%是什么呢？我也不知道，谁可以在评论里告诉我？
 
-<img src="image/chapter_juc/v2-ffbe0e21512c64a1b444cf55d4b3bf61_r.jpg" />
+<img src="chapter_juc/image/v2-ffbe0e21512c64a1b444cf55d4b3bf61_r.jpg" />
 
 ## 六、公平锁、非公平锁
 
@@ -129,7 +129,7 @@ Java里只要以Reentrant开头命名的锁都是可重入锁，而且JDK提供�
 
 对ReentrantLock类而言，通过构造函数传参可以指定该锁是否是公平锁，默认是非公平锁。一般情况下，非公平锁的吞吐量比公平锁大，如果没有特殊要求，优先使用非公平锁。
 
-<img src="image/chapter_juc/v2-7a4a72fe7ace46095cd3ca2e6c5212d9_r.jpg" />
+<img src="chapter_juc/image/v2-7a4a72fe7ace46095cd3ca2e6c5212d9_r.jpg" />
 
 对于synchronized而言，它也是一种非公平锁，但是并没有任何办法使其变成公平锁。
 
@@ -167,7 +167,7 @@ public interface Lock {
 
 看下Java里的ReadWriteLock接口，它只规定了两个方法，一个返回读锁，一个返回写锁。
 
-<img src="image/chapter_juc/v2-5ec6ed066c75e59c4f3829ca51db8148_r.jpg" />
+<img src="chapter_juc/image/v2-5ec6ed066c75e59c4f3829ca51db8148_r.jpg" />
 
 记得之前的乐观锁策略吗？所有线程随时都可以读，仅在写之前判断值有没有被更改。
 
@@ -189,7 +189,7 @@ JDK提供的唯一一个ReadWriteLock接口实现类是ReentrantReadWriteLock。
 
 有。java.util.concurrent.atomic包里面的原子类都是利用乐观锁实现的。
 
-<img src="image/chapter_juc/v2-98cd919fe09521bac03aa66d6968aeb2_r.jpg" />
+<img src="chapter_juc/image/v2-98cd919fe09521bac03aa66d6968aeb2_r.jpg" />
 
 为什么网上有些资料认为偏向锁、轻量级锁是乐观锁？理由是它们底层用到了CAS？或者是把“乐观/悲观”与“轻量/重量”搞混了？其实，线程在抢占这些锁的时候，确实是循环+CAS的操作，感觉好像是乐观锁。但问题的关键是，我们说一个锁是悲观锁还是乐观锁，总是应该站在应用层，看它们是如何锁住应用数据的，而不是站在底层看抢占锁的过程。如果一个线程尝试获取锁时，发现已经被占用，它是否继续读取数据，等后续要更新时再决定要不要重试？对于偏向锁、轻量级锁来说，显然答案是否定的。无论是挂起还是忙等，对应用数据的读取操作都被“挡住”了。从这个角度看，它们确实是悲观锁。
 

@@ -2,7 +2,7 @@
 
 HotSpot 虚拟机提供了多种垃圾收集器，每种收集器都有各自的特点。我们选择的只是对具体应用最合适的收集器。
 
-<img src="image/chapter_jvm/0f2688bdfebc58cc19687b47df1ce866.png" />
+<img src="chapter_jvm/image/0f2688bdfebc58cc19687b47df1ce866.png" />
 
 上图中的7种作用于不同分代的收集器，如果两个收集器之间存在连线，就说明它们可以搭配使用。
 

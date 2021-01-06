@@ -4,7 +4,7 @@
 
 `Vector`同样继承于`AbstractList`，实现了`List`、`RandomAccess`、`Cloneable`、`Serializable`接口。
 
-<img src="image/chapter_collection/Vector.png" />
+<img src="chapter_collection/image/Vector.png" />
 
 `Vector`的底层同样基于数组实现，内部处理过程也类似，添加元素时实现了数组的动态扩容。不同的是，`Vector`是一个线程安全的数据结构，通过`synchronized`关键字保证了多线程环境下的安全。
 

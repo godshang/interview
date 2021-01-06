@@ -4,7 +4,7 @@
 
 ## 类继承结构
 
-<img src="image/chapter_collection/HashSet.png" />
+<img src="chapter_collection/image/HashSet.png" />
 
 1. `HashSet`继承自`AbstractSet`抽象类。
 2. `HashSet`实现了`Set`、`Cloneable`、`Serializable`接口。

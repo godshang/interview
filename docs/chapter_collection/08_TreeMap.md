@@ -4,7 +4,7 @@
 
 ## 类继承结构
 
-<img src="image/chapter_collection/TreeMap.png" />
+<img src="chapter_collection/image/TreeMap.png" />
 
 1. `TreeMap`继承自`AbstractMap`抽象类。
 2. `TreeMap`实现了`NavigableMap`、`Cloneable`、`Serializable`接口。
@@ -120,7 +120,7 @@ public TreeMap(SortedMap<K, ? extends V> m) {
 
 `buildFromSorted`这个方法是一个内部的私有方法，被多个方法调用，主要功能是从有序数据中构建树结构。
 
-<img src="image/chapter_collection/TreeMap_buildFromSorted_call_hierarchy.png" />
+<img src="chapter_collection/image/TreeMap_buildFromSorted_call_hierarchy.png" />
 
 关于红黑树，后面会单独用一篇文章介绍，这里不再详细说明了。
 

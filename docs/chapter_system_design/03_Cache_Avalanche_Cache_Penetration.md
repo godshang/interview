@@ -12,7 +12,7 @@
 
 这就是缓存雪崩。
 
-<img src="image/chapter_system_desgin/0b0f366a21fd39faab25af3b402f4d8a.png" />
+<img src="chapter_system_desgin/image/0b0f366a21fd39faab25af3b402f4d8a.png" />
 
 缓存雪崩的事前事中事后的解决方案如下：
 
@@ -20,7 +20,7 @@
 * 事中：本地 ehcache 缓存 + hystrix 限流&降级，避免 MySQL 被打死。
 * 事后：redis 持久化，一旦重启，自动从磁盘上加载数据，快速恢复缓存数据。
 
-<img src="image/chapter_system_desgin/70fc05a4dd46efd11405b7ad08e55256.png" />
+<img src="chapter_system_desgin/image/70fc05a4dd46efd11405b7ad08e55256.png" />
 
 用户发送一个请求，系统 A 收到请求后，先查本地 ehcache 缓存，如果没查到再查 redis。如果 ehcache 和 redis 都没有，再查数据库，将数据库中的结果，写入 ehcache 和 redis 中。
 

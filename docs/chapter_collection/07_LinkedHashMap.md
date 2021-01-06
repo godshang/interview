@@ -6,7 +6,7 @@
 
 `LinkedHashMap`继承自`HashMap`，且实现了`Map`接口。因此，`HashMap`的所有能力和特性，`LinkedHashMap`均具备。
 
-<img src="image/chapter_collection/LinkedHashMap.png" />
+<img src="chapter_collection/image/LinkedHashMap.png" />
 
 ## 源码分析
 

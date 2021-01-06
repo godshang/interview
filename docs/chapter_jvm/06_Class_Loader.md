@@ -4,7 +4,7 @@
 
 一个类型从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载（Loading）、验证（Verification）、准备（Preparation）、解析（Resolution）、初始化（Initialization）、使用（Using）和卸载（Unloading）七个阶段，其中验证、准备、解析三个部分统称为连接（Linking）。
 
-<img src="image/chapter_jvm/e974afe6145e243c3673c817f7d90b90.png" />
+<img src="chapter_jvm/image/e974afe6145e243c3673c817f7d90b90.png" />
 
 加载、验证、准备、初始化和卸载这五个阶段的顺序是确定的，类型的加载过程必须按照这种顺序按部就班地开始，而解析阶段则不一定：它在某些情况下可以在初始化阶段之后再开始，这是为了支持Java语言的运行时绑定特性（也称为动态绑定或晚期绑定）。
 
@@ -126,7 +126,7 @@ JDK 9之前的Java应用都是由这三种类加载器互相配合来完成加�
 
 在Tomcat中，同样有破坏双亲委派模型的行为。Tomcat的webappClassLoader只加载自己目录下的class文件，不会传递给父类加载器。
 
-<img src="image/chapter_jvm/137084-20180526104342525-959933190.png" />
+<img src="chapter_jvm/image/137084-20180526104342525-959933190.png" />
 
 tomcat里提供了多个classloader，主要目的是：
 

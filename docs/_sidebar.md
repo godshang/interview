@@ -38,6 +38,8 @@
     * [类加载器](chapter_jvm/06_Class_Loader.md)
 
 * Part II 中间件
+  * MySQL
+    * [MySQL常见题](chapter_mysql/01.md)
   * Spring
     * [Spring IOC 容器源码分析](chapter_spring/02_Spring_IoC.md)
     * [Spring AOP 使用介绍，从前世到今生](chapter_spring/03_Spring_AOP_Intro.md)

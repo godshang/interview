@@ -6,7 +6,7 @@
 
 ## 布隆过滤器的原理
 
-<img src="image/chapter_redis/f3e4e8a7fa00392de465dee762d90df9.png" />
+<img src="chapter_redis/image/f3e4e8a7fa00392de465dee762d90df9.png" />
 
 每个布隆过滤器对应到 Redis 的数据结构里面就是一个大型的位数组和几个不一样的无偏 hash 函数。所谓无偏就是能够把元素的 hash 值算得比较均匀。 
 

@@ -6,7 +6,7 @@ Reactor模式并不是设计模式中的某一种，而是IO多路复用模型�
 
 ## Reactor结构
 
-<img src="image/chapter_xx/4235178-2d83a09abf0a3436.webp" />
+<img src="chapter_xx/image/4235178-2d83a09abf0a3436.webp" />
 
 Reactor模式的角色构成：
 
@@ -29,7 +29,7 @@ Reactor模式的角色构成：
 
 ### 单线程Reactor模式
 
-<img src="image/chapter_xx/4235178-4047d3c78bb467c9.webp" />
+<img src="chapter_xx/image/4235178-4047d3c78bb467c9.webp" />
 
 工作流程：
 
@@ -44,7 +44,7 @@ Reactor模式的角色构成：
 
 ### 使用工作者线程池
 
-<img src="image/chapter_xx/4235178-d570de7505817605.webp" />
+<img src="chapter_xx/image/4235178-d570de7505817605.webp" />
 
 与单线程Reactor模式不同的是，添加了一个工作者线程池，并将非I/O操作从Reactor线程中移出转交给工作者线程池来执行。这样能够提高Reactor线程的I/O响应，不至于因为一些耗时的业务逻辑而延迟对后面I/O请求的处理。
 
@@ -63,7 +63,7 @@ Reactor模式的角色构成：
 
 ### 多线程Reactor模式
 
-<img src="image/chapter_xx/4235178-929a4d5e00c5e779.webp" />
+<img src="chapter_xx/image/4235178-929a4d5e00c5e779.webp" />
 
 Reactor线程池中的每一Reactor线程都会有自己的Selector、线程和分发的事件循环逻辑。
 mainReactor可以只有一个，但subReactor一般会有多个。mainReactor线程主要负责接收客户端的连接请求，然后将接收到的SocketChannel传递给subReactor，由subReactor来完成和客户端的通信。
