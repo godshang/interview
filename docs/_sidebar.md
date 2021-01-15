@@ -52,9 +52,14 @@
     * [Scan](chapter_redis/05_Redis_Scan.md)
     * [Redis持久化](chapter_redis/06_Redis_Persistence.md)
     * [Redis事务](chapter_redis/07_Redis_Tx.md)
+    * [Redis数据结构与编码](chapter_redis/08_Redis_DataStructure.md)
+    * [Redis缓存的雪崩、穿透和击穿](chapter_redis/09_Redis_Cache_Invalid.md)
+    * [Redis与数据库的双写一致性](chapter_redis/10_Redis_DB_Consistency.md)
+    * [Redis常见面试题](chapter_redis/11_Redis_Question.md)
   * 消息队列
     * [Kafka深度解析](chapter_mq/01_Kafka.md)
-    * [为什么使用消息队列？消息队列有什么优点和缺点？Kafka、ActiveMQ、RabbitMQ、RocketMQ 都有什么优点和缺点？](chapter_mq/xx_Why_MQ.md)
+    * [RocketMQ设计原理](chapter_mq/02_RocketMQ.md)
+    * [消息队列常见面试题](chapter_mq/03_MQ_Question.md)
 
 * Part III 理论
   * 分布式系统
