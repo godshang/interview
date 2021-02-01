@@ -40,6 +40,9 @@
 * Part II 中间件
   * 数据库
     * [MySQL常见题](chapter_db/01.md)
+    * [数据库分库分表](chapter_db/02_Shard.md)
+    * [读写分离](chapter_db/03_Read_Write_Separation.md)
+    * [索引原理与优化](chapter_db/04_Index.md)
   * Spring
     * [Spring IOC 容器源码分析](chapter_spring/02_Spring_IoC.md)
     * [Spring AOP 使用介绍，从前世到今生](chapter_spring/03_Spring_AOP_Intro.md)
@@ -71,6 +74,7 @@
     * [如何设计一个亿级网关](chapter_system_design/04_Gateway.md)
   * 其他
     * [IO模型](chapter_xx/IO.md)
+    * [IO多路复用的区别](chapter_xx/IO_Multiplex.md)
     * [Reactor模式](chapter_xx/Reactor.md)
 
 * Part IV 算法
