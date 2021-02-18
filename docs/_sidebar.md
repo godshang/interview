@@ -1,6 +1,7 @@
 * Part I Java
   * Java基础
     * [Java语言基础](chapter_basic/01_Java_Fundament.md)
+    * [代理](chapter_basic/02_Java_Proxy.md)
   * [Java集合框架](chapter_collection/README.md)
     * [ArrayList源码分析](chapter_collection/01_ArrayList.md)
     * [LinkedList源码分析](chapter_collection/02_LinkedList.md)
@@ -13,7 +14,7 @@
     * [了解红黑树](chapter_collection/09_Red_Black_Tree.md)
     * [HashSet源码分析](chapter_collection/10_HashSet.md)
     * [LinkedHashSet源码分析](chapter_collection/11_LinkedHashSet.md)
-  * Java并发编程
+  * Java并发
     * [Java的线程](chapter_juc/01_Thread.md)
     * [Java的锁](chapter_juc/02_Lock.md)
     * [队列同步器](chapter_juc/03_JUC_AQS.md)
@@ -23,7 +24,7 @@
     * [ConcurrentHashMap源码分析](chapter_juc/07_ConcurrentHashMap.md)
     * [ConcurrentLinkedQueue源码分析](chapter_juc/08_ConcurrentLinkedQueue.md)
     * [BlockingQueue源码分析](chapter_juc/09_BlockingQueue.md)
-    * [BlockingQueue源码分析](chapter_juc/10_ArrayBlockingQueue.md)
+    * [ArrayBlockingQueue源码分析](chapter_juc/10_ArrayBlockingQueue.md)
     * [LinkedBlockingQueue源码分析](chapter_juc/11_LinkedBlockingQueue.md)
     * [DelayQueue源码分析](chapter_juc/12_DelayQueue.md)
     * [PriorityBlockingQueue源码分析](chapter_juc/13_PriorityBlockingQueue.md)
@@ -38,15 +39,15 @@
     * [类加载器](chapter_jvm/06_Class_Loader.md)
 
 * Part II 中间件
+  * Spring
+    * [Spring IOC 容器源码分析](chapter_spring/02_Spring_IoC.md)
+    * [Spring AOP 使用介绍，从前世到今生](chapter_spring/03_Spring_AOP_Intro.md)
+    * [Spring AOP 源码解析](chapter_spring/04_Spring_AOP_Source.md)
   * 数据库
     * [MySQL常见题](chapter_db/01.md)
     * [数据库分库分表](chapter_db/02_Shard.md)
     * [读写分离](chapter_db/03_Read_Write_Separation.md)
     * [索引原理与优化](chapter_db/04_Index.md)
-  * Spring
-    * [Spring IOC 容器源码分析](chapter_spring/02_Spring_IoC.md)
-    * [Spring AOP 使用介绍，从前世到今生](chapter_spring/03_Spring_AOP_Intro.md)
-    * [Spring AOP 源码解析](chapter_spring/04_Spring_AOP_Source.md)
   * Redis
     * [分布式锁](chapter_redis/01_Redis_Lock.md)
     * [消息队列](chapter_redis/02_Redis_MQ.md)
