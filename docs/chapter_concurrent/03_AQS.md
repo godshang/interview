@@ -43,7 +43,7 @@
 
 节点是构成同步队列的基础，同步器拥有首节点和尾节点，没有成功获取同步状态的线程将会成为节点加入该队列的尾部。同步队列的基本结构如图所示。
 
-<img src="chapter_juc/image/e2c789cadfc184cd40636e650114058c.png" />
+<img src="chapter_concurrent/image/e2c789cadfc184cd40636e650114058c.png" />
 
 同步器包含两个节点类型的引用，一个指向头节点，另一个指向尾节点。当一个线程成功获取了同步状态，其他线程将无法获取到同步状态，转而被构造成为节点并加入到同步队列中，而这个加入队列的过程必须要保证线程安全，因此同步器提供了一个基于CAS的设置尾节点的方法：`compareAndSetTail(Node expect, Node update)`，它需要传递当前线程认为的尾节点和当前节点，只有设置成功后，当前节点菜正式与之前的尾节点建立关联。
 
@@ -136,13 +136,13 @@ final boolean acquireQueued(final Node node, int arg) {
 1. 头节点是成功获取到同步状态的节点，而头节点的线程释放了同步状态之后，将会唤醒其后继节点，后继节点的线程被唤醒后需要检查自己的前驱节点是否是头节点。
 2. 维护同步队列的FIFO原则。该方法中，节点自旋获取同步状态的行为如下图所示。
 
-<img src="chapter_juc/image/5364620b0746958eb59530f10e9916af.png" />
+<img src="chapter_concurrent/image/5364620b0746958eb59530f10e9916af.png" />
 
 由于非首节点线程前驱节点出队或者被中断而从等待状态返回，随后检查自己的前驱是否是头节点，如果是则尝试获取同步状态。可以看到节点和节点之间在循环检查的过程中基本不相互通信，而是简单地判断自己的前驱是否尾头节点，这样就使得节点的释放规则符合FIFO，并且也便于对过早通知的处理（过早通知是指前驱节点不是头节点的线程由于中断而被唤醒）。
 
 独占式同步状态获取流程，也就是`acquire(int arg)`方法调用流程，如下图所示。
 
-<img src="chapter_juc/image/5c095aa88028cab2bed82288cd4df65c.png" />
+<img src="chapter_concurrent/image/5c095aa88028cab2bed82288cd4df65c.png" />
 
 上图中，前驱节点尾头节点且能够获取同步状态的判断条件和线程进入等待状态时获取同步状态的自旋过程。当同步状态获取成功之后，当前线程从`accquire(int arg)`方法返回，如果对于锁这种并发组件而言，代表着当前线程获取了锁。
 
@@ -267,4 +267,4 @@ private boolean doAcquireNanos(int arg, long nanosTimeout)
 
 如果`nanosTimeout`小于等于`spinForTimeoutThreshold`（1000纳秒）时，将不会使线程进行超时等待，而是进入快速的自旋过程，非常短的超时等待无法做到十分精确，如果这时再进行超时等待，相反会让`nanosTimeout`的超时从整体上表现得反而不精确。因此，再超时非常短的场景下，同步器将会进入无条件的快速自旋
 
-<img src="chapter_juc/image/1557f0b9c362ab2804f60786530f576e.png" />
+<img src="chapter_concurrent/image/1557f0b9c362ab2804f60786530f576e.png" />

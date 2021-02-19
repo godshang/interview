@@ -116,7 +116,7 @@ protected final boolean tryAcquire(int acquires) {
 
 读写锁将同步变量分成两部分，高16位表示读，低16位表示写。
 
-<img src="chapter_juc/image/0d1cf4e26c8323fe95cd764308917002.png" />
+<img src="chapter_concurrent/image/0d1cf4e26c8323fe95cd764308917002.png" />
 
 通过位运算可以迅速确定当前读和写各自的状态。
 

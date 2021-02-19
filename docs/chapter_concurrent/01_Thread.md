@@ -24,7 +24,7 @@ Java线程在运行的生命周期中可能处于下述的6种不同的状态，
 * TIME_WAITING：超时等待状态，该状态不同于WAITING，它是可以在指定的时间自行返回的。
 * TERMINATED：终止状态，表示当前线程已经执行完毕。
 
-<img src="chapter_juc/image/dcb65e330fa6e993d53680574fb19507.png" />
+<img src="chapter_concurrent/image/dcb65e330fa6e993d53680574fb19507.png" />
 
 线程创建之后，调用`start()`方法开始运行。当线程执行`wait()`方法之后，线程进入等待状态。进入等待状态的线程需要依靠其他线程的通知才能返回到运行状态，而超时等待状态相当于在等待状态的基础上增加了超时限制，也就是超时时间到达时将会返回到运行状态。当线程调用同步方法时，在没有获取到锁的情况下，线程将会进入到阻塞状态。线程在执行`Runnable`的`run()`方法之后将会进入到终止状态。
 
@@ -52,10 +52,82 @@ Java线程在运行的生命周期中可能处于下述的6种不同的状态，
 
 1. 使用`wait()`、`notify()`以及`notifyAll()`时需要先调用对象加锁。
 2. 调用`wait()`方法后，线程状态由`RUNNING`变为`WAITING`，并将当前线程放置到对象的等待队列。
-3. `notify`或`notifyAll()`方法调用后，等待线程一九不会从`wait()`返回，需要调用`notify()`或`notifyAll()`的线程释放锁之后，等待线程才有机会从`wait()`返回。
+3. `notify`或`notifyAll()`方法调用后，等待线程依旧不会从`wait()`返回，需要调用`notify()`或`notifyAll()`的线程释放锁之后，等待线程才有机会从`wait()`返回。
 4. `notify()`方法将等待队列中的一个等待线程从等待队列中移到同步队列中，而`notifyAll()`方法则是将等待队列中所有的线程全部移到同步队列，被移动的线程状态由`WAITING`变为`BLOCKED`。
 5. 从`wait()`方法返回的前提是获得了调用对象的锁。
 
 等待/通知机制依托于同步机制，其目的就是确保等待线程从`wait()`方法返回时能够感知到通知线程对变量做出的修改。
 
-<img src="chapter_juc/image/13c2d7795f0bfea057e2231407aa4b09.png" />
+<img src="chapter_concurrent/image/13c2d7795f0bfea057e2231407aa4b09.png" />
+
+## 线程池
+
+线程池提供了一种限制和管理资源（包括执行一个任务）。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。
+
+使用线程池的好处：
+
+* 降低资源消耗：通过重复利用已创建的线程降低线程创建和销毁造成的消耗。
+* 提高响应速度：当任务到达时，任务可以不需要的等到线程创建就能立即执行。
+* 提高线程的可管理性：线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。
+
+在创建线程池时不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，这样的处理方式让写的同学更加明确线程池的运行规则，规避资源耗尽的风险。Executors 返回线程池对象的弊端如下：
+
+* FixedThreadPool 和 SingleThreadExecutor ： 允许请求的队列长度为 Integer.MAX_VALUE ，可能堆积大量的请求，从而导致OOM。
+* CachedThreadPool 和 ScheduledThreadPool ： 允许创建的线程数量为 Integer.MAX_VALUE ，可能会创建大量线程，从而导致OOM。
+
+ThreadPoolExecutor 构造函数重要参数：
+
+* corePoolSize : 核心线程数线程数定义了最小可以同时运行的线程数量。
+* maximumPoolSize : 当队列中存放的任务达到队列容量的时候，当前可以同时运行的线程数量变为最大线程数。
+* workQueue: 当新任务来的时候会先判断当前运行的线程数量是否达到核心线程数，如果达到的话，新任务就会被存放在队列中。
+* keepAliveTime：当线程池中的线程数量大于 corePoolSize 的时候，如果这时没有新的任务提交，核心线程外的线程不会立即销毁，而是会等待，直到等待的时间超过了 keepAliveTime才会被回收销毁；
+* unit ：keepAliveTime 参数的时间单位。
+* threadFactory ：executor 创建新线程的时候会用到。
+* handler ：饱和策略。
+
+### 线程池提交任务
+
+我们使用 executor.execute(worker) 来提交一个任务到线程池中去，这个方法非常重要，下面我们来看看它的源码：
+
+```java
+// 存放线程池的运行状态 (runState) 和线程池内有效线程的数量 (workerCount)
+private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
+
+private static int workerCountOf(int c) {
+    return c & CAPACITY;
+}
+
+private final BlockingQueue<Runnable> workQueue;
+
+public void execute(Runnable command) {
+    // 如果任务为null，则抛出异常。
+    if (command == null)
+        throw new NullPointerException();
+    // ctl 中保存的线程池当前的一些状态信息
+    int c = ctl.get();
+
+    //  下面会涉及到 3 步 操作
+    // 1.首先判断当前线程池中之行的任务数量是否小于 corePoolSize
+    // 如果小于的话，通过addWorker(command, true)新建一个线程，并将任务(command)添加到该线程中；然后，启动该线程从而执行任务。
+    if (workerCountOf(c) < corePoolSize) {
+        if (addWorker(command, true))
+            return;
+        c = ctl.get();
+    }
+    // 2.如果当前之行的任务数量大于等于 corePoolSize 的时候就会走到这里
+    // 通过 isRunning 方法判断线程池状态，线程池处于 RUNNING 状态才会被并且队列可以加入任务，该任务才会被加入进去
+    if (isRunning(c) && workQueue.offer(command)) {
+        int recheck = ctl.get();
+        // 再次获取线程池状态，如果线程池状态不是 RUNNING 状态就需要从任务队列中移除任务，并尝试判断线程是否全部执行完毕。同时执行拒绝策略。
+        if (!isRunning(recheck) && remove(command))
+            reject(command);
+            // 如果当前线程池为空就新创建一个线程并执行。
+        else if (workerCountOf(recheck) == 0)
+            addWorker(null, false);
+    }
+    //3. 通过addWorker(command, false)新建一个线程，并将任务(command)添加到该线程中；然后，启动该线程从而执行任务。
+    //如果addWorker(command, false)执行失败，则通过reject()执行相应的拒绝策略的内容。
+    else if (!addWorker(command, false))
+        reject(command);
+}
+```

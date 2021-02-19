@@ -108,7 +108,7 @@ static final class Segment<K,V> extends ReentrantLock implements Serializable {
 
 下面是`ConcurrentHashMap`的结构示意图。
 
-<img src="chapter_juc/image/323534efc2f9dfca4c9e884d73210141.jpg" />
+<img src="chapter_concurrent/image/323534efc2f9dfca4c9e884d73210141.jpg" />
 
 ### 用分离锁实现多个线程间的并发写操作
 
@@ -140,11 +140,11 @@ static final class Segment<K,V> extends ReentrantLock implements Serializable {
 
 执行删除之前的原链表：
 
-<img src="chapter_juc/image/1ceb5a1b690d9d6cddab0a014c9d9393.jpg" />
+<img src="chapter_concurrent/image/1ceb5a1b690d9d6cddab0a014c9d9393.jpg" />
 
 执行删除之后的新链表
 
-<img src="chapter_juc/image/c9f9d09080b791b63bd99792c7d096d0.jpg" />
+<img src="chapter_concurrent/image/c9f9d09080b791b63bd99792c7d096d0.jpg" />
 
 从上图可以看出，删除节点`C`之后的所有节点原样保留到新链表中；删除节点`C`之前的每个节点被克隆到新链表中，注意：它们在新链表中的链接顺序被反转了。
 
@@ -158,7 +158,7 @@ static final class Segment<K,V> extends ReentrantLock implements Serializable {
 
 下面以写线程`M`和读线程`N`来说明`ConcurrentHashMap`如何协调读 / 写线程间的内存可见性问题。
 
-<img src="chapter_juc/image/0fced263f358623d77bb197d1b911e00.jpg" />
+<img src="chapter_concurrent/image/0fced263f358623d77bb197d1b911e00.jpg" />
 
 假设线程`M`在写入了`volatile`型变量`count`后，线程`N`读取了这个`volatile`型变量`count`。
 
