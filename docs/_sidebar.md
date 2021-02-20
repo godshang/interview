@@ -26,18 +26,17 @@
     * [Volatile](chapter_concurrent/09_Volatile.md)
     * [ThreadLocal原理](chapter_concurrent/10_ThreadLocal.md)
   * JVM
-    * [内存模型](chapter_jvm/01_Memory.md)
-    * [垃圾收集策略与算法](chapter_jvm/02_GC.md)
+    * [JVM内存区域](chapter_jvm/01_Memory.md)
+    * [垃圾回收](chapter_jvm/02_GC.md)
     * [HotSpot的算法细节实现](chapter_jvm/03_HotSpot_Algo.md)
-    * [HotSpot 垃圾收集器](chapter_jvm/04_HotSpot_GC.md)
-    * [内存分配与回收策略](chapter_jvm/05_Memory_Allocation.md)
-    * [类加载器](chapter_jvm/06_Class_Loader.md)
+    * [类加载器](chapter_jvm/04_Class_Loader.md)
 
 * Part II 中间件
   * Spring
     * [Spring IOC 容器源码分析](chapter_spring/02_Spring_IoC.md)
     * [Spring AOP 使用介绍，从前世到今生](chapter_spring/03_Spring_AOP_Intro.md)
     * [Spring AOP 源码解析](chapter_spring/04_Spring_AOP_Source.md)
+    * [Spring MVC](chapter_spring/05_Spring_MVC.md)
   * 数据库
     * [MySQL常见题](chapter_db/01.md)
     * [数据库分库分表](chapter_db/02_Shard.md)
@@ -66,8 +65,10 @@
   * 系统设计
     * [限流](chapter_system_design/01_Rate_Limiter.md)
     * [缓存一致性](chapter_system_design/02_Cache_Consistency.md)
-    * [缓存雪崩、缓存穿透](chapter_system_design/02_Cache_Consistency.md)
+    * [缓存雪崩、缓存穿透](chapter_system_design/03_Cache_Avalanche_Cache_Penetration.md)
     * [如何设计一个亿级网关](chapter_system_design/04_Gateway.md)
+    * [如何设计一个短网址服务](chapter_system_design/05_Short_Url.md)
+    * [构建高并发的扣减服务](chapter_system_design/06_Deduction.md)
   * 其他
     * [IO模型](chapter_xx/IO.md)
     * [IO多路复用的区别](chapter_xx/IO_Multiplex.md)
