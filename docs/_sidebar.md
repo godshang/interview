@@ -1,7 +1,8 @@
-* Part I Java
-  * Java基础
+* Part I 基础知识
+  * 基础
     * [Java语言基础](chapter_basic/01_Java_Fundament.md)
     * [代理](chapter_basic/02_Java_Proxy.md)
+    * [排序算法](chapter_basic/03_Sort_Algorithm.md)
   * [Java集合框架](chapter_collection/README.md)
     * [ArrayList源码分析](chapter_collection/01_ArrayList.md)
     * [LinkedList源码分析](chapter_collection/02_LinkedList.md)
